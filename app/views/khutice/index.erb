@@ -1,0 +1,40 @@
+<%if current_user.email == "ryou9305@naver.com"%>
+<h1>관리자 chk페이지 입니다.</h1>
+    <div class="container">
+        <div class="row">
+        <%@notice_all.each do |x|%>
+            <div class="col-4">
+            <div class="card" style="height:400px;">
+              <div class="card-block" style="overflow:hidden;">
+                <h4 class="card-title"><%=x.title%> : <%=x.link%> : <%=x.upload_date[0..9]%></h4>
+                <%if x.contents.sub(/<!--.*-->/, "") == ""%>
+                    <p>내용이 없습니다.</p>
+                <%else%>
+                    <p class="card-text"><%=x.contents.sub(/<!--.*-->/, "").truncate_words(15)%></p>
+                <%end%>
+                <a href="http://www.khu.ac.kr/life/noticeView.do?noticeId=<%=x.link%>&category=ntcate0<%=x.category%>" class="card-link">바로가기</a>
+                <br>
+                <%unless x.img =="[]"%>
+                    <%eval(x.img).each_with_index do |y, index|%>
+                    <a href="<%=y.delete "\""%>">이미지<%=index+1%></a>
+                    <%end%>
+                <%end%>
+              </div>
+            </div>
+            </div>
+        <%end%>
+        </div>
+    </div>
+    
+    
+    <%@notice_all.each do |x|%>
+        <h1><%=x.title%> : <%=x.link%> : <%=x.upload_date[0..9]%></h1>
+        <%=x.contents.sub(/<!--.*-->/, "")%><br>
+        <%unless x.img =="[]"%>
+            <%eval(x.img).each do |y|%>
+                <img src='<%=y.delete "\""%>' style="width:400px;"><br><br>
+            <%end%>
+        <%end%><br>
+    <%end%>
+    
+<%end%>

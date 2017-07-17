@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <div style='width:640px; margin-top:50px; margin-left:100px;'>
+        <h2>선택한 키워드에 대한 공지사항이 등록되었어요!</h2>
+    </div>
+    <br>
+    
+    <%@content.each do |content|%>
+        <div>
+            <h4><%=content[0]%></h4> 
+            <br> 
+            <a href="<%=content[1]%>">바로가기</a>
+            <br><br>    
+        </div>
+    <%end%>
+    
+  </body>
+</html>

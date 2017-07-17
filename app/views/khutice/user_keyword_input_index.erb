@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <img src="/assets/logo.jpg" style="display:block;margin: 0 auto;">
+    <div class="inner" style="display:block; !important;">
+        <div class="centered" style="z-index:1">
+            <h3 class="main">공지 받을 키워드를 입력하고, 알림을 받으세요! </h3> <br>
+                <% if current_user.nil? %>
+                    <input type="text" name="keyword" class="form-control" placeholder="취업, 근로, 장학금, etc..." >
+                    <br>
+                    <a href="/users/sign_in"><button type="button" class="btn btn-secondary" style="margin-top:6px">추가하러 하기</button></a>
+                <% else %>
+                    <br>
+                    <a href="/khutice/user_keyword_input_write"><button type="button" class="btn btn-secondary" style="margin-top:3px">추가하러 하기</button></a>
+                <% end %>
+            <br>
+        </div>
+    </div>
+</div>

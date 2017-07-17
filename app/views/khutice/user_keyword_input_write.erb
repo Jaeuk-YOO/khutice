@@ -1,0 +1,105 @@
+<div class="container mb-3 mt-5">
+  <div class="alert alert-info" role="alert">
+    <strong>키워드를 채워주세요.</strong> 한 번에 최대 3개까지 등록할 수 있습니다 :)
+  </div>
+  <br>
+  <form action="/khutice/user_keyword_input_create" method="post">
+    <%KeywordPool.all.each do |x|%>
+      <%if x.user_input_count>3%>
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" name="keyword[chkboxes][]" value="<%=x.name%>" multiple>
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description"><%=x.name%></span>
+        </label>
+      <%end%>
+    <%end%>
+    <br>
+    <br>
+    <div class="alert alert-danger" role="alert">
+      <strong>원하는 키워드가 없으신가요?</strong> 직접 입력해서 등록해보세요!
+    </div>
+    <div class="input-group input-group-lg">
+      <input type="text" class="form-control" placeholder="원하는 키워드를 입력하세요!" name="keyword_input" aria-describedby="sizing-addon1">
+    </div>
+    &nbsp;<br>
+    <button type="submit" class="btn btn-secondary mt-2" >추가하기</button>
+  </form>
+  <br>
+  <br>
+    <h4>내가 입력한 키워드를 확인해보세요</h4>
+    <div class="checkbox_chked">
+      <br>
+        <% if @keyword_by_current_user.nil? %>
+            <p>입력한 키워드가 없습니다.</p>
+        <% else %>
+    </div>
+    <div class="box">
+    <% @keyword_by_current_user.each do |x| %>
+        <% if @standards.where(:name => x.name ).take.nil? %>
+        <div class="card mt-3" style="width: 100% ">
+              <div class="card-block">
+                <h4 class="card-title"><%= x.name %></h4>
+                <p class="card-text">키워드를 원하는 사람이 부족해요 친구를 추가해서 키워드를 등록하세요!</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">필요한 친구(<%= @keyword_pool.where(:name => x.name).take.user_input_count %> / 3)</li>
+              </ul>
+              <div class="card-block">
+                <a href="/khutice/destroy/<%= x.id %>" class="card-link">삭제</a>
+              </div>
+        </div>
+        <br>
+        <% else %>
+            <div class="card mt-3" style="width: 100%">
+                  <div class="card-block">
+                    <h4 class="card-title"><%= x.name %></h4>
+                    <p class="card-text">해당 키워드로 바로가는 공지사항입니다. 클릭해서 확인하세요</p>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <%if x.notice_keywords[0].nil?%>
+                      
+                      <div class="alert alert-danger" role="alert">
+                        <strong>아직 공지된게 없네요!</strong> 공지가 새로 올라오면 새로 업데이트 됩니다. 잠시만 기다려주세요 :)
+                      </div>
+                      
+                    <%else%>
+                      <% x.notice_keywords.each do |y|%> 
+                      <li class="list-group-item"> 
+                        <a href="http://www.khu.ac.kr/life/noticeView.do?noticeId=<%=y.noticetitle.link%>&category=ntcate0<%=y.noticetitle.category.to_s%>">
+                          <%=y.noticetitle.title%>
+                        </a>
+                        &nbsp;<span class="badge badge-success">공지시각 : <%= y.noticetitle.upload_date%></span>
+                      </li>
+                      <%end%>  
+                    <%end%>
+                  </ul>
+                  <div class="card-block">
+                    <a href="/khutice/destroy/<%= x.id %>" class="card-link">등록한 키워드 삭제하기</a>
+                  </div>
+            </div>
+            <br>
+        <% end %>
+        <% end %>
+    <% end %>
+    </div>
+</div>
+
+<script>
+  $( document ).ready(function() {
+    $(".checkbox_chked").css("display", "none");
+    $(".custom-control-input").click(function() {
+      
+      if ($(".custom-control-input:checked").length > 2)
+      {
+        $(".custom-control-input:not(:checked)").attr("disabled", true);
+        $(".checkbox_chked").append("<p>키워드는 3개까지 입력 할 수 있습니다.</p>");
+      }
+      else
+      {
+        $(".custom-control-input:not(:checked)").attr("disabled", false);
+        $(".checkbox_chked").css("display", "none");
+      }  
+      
+    });    
+  });
+</script>
