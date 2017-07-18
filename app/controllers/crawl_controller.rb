@@ -69,12 +69,14 @@ class CrawlController < ApplicationController
             
             keywordpool_all = KeywordPool.all
             keywordpool_all.each do |each_keyword_in_pool|
-                if (each_notice.contents.include? each_keyword_in_pool.name || each_notice.title.include? each_keyword_in_pool.name) && (NoticeKeyword.where(:noticetitle_id => each_notice.id ).take.nil?) == true
+                if  (each_notice.contents.include? each_keyword_in_pool.name) || (each_notice.title.include? each_keyword_in_pool.name) == true
+                    if  NoticeKeyword.where(:noticetitle_id => each_notice.id ).take.nil? == true
                     notice_keyword_input = NoticeKeyword.new
                     notice_keyword_input.noticetitle_id = each_notice.id
                     notice_keyword_input.name = each_keyword_in_pool.name
                     notice_keyword_input.status = true
                     notice_keyword_input.save
+                    end
                 else
                 end
             end
@@ -134,7 +136,7 @@ class CrawlController < ApplicationController
             if NoticeKeyword.where(:noticetitle_id => each_notice.id).take.nil?
                 keywordpool_all = KeywordPool.all
                 keywordpool_all.each do |each_keyword_in_pool|
-                    if  (each_notice.contents.include? each_keyword_in_pool.name || each_notice.title.include? each_keyword_in_pool.name)
+                    if  (each_notice.contents.include? each_keyword_in_pool.name) || (each_notice.title.include? each_keyword_in_pool.name) == true
                         notice_keyword_input = NoticeKeyword.new
                         notice_keyword_input.noticetitle_id = each_notice.id
                         notice_keyword_input.name = each_keyword_in_pool.name

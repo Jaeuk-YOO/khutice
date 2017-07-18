@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
          
   has_many :user_keywords
   has_many :user_mail_statuses
+  has_many :user_teaches
 end

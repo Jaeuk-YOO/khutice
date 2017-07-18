@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170620142209) do
+ActiveRecord::Schema.define(version: 20170718004230) do
 
   create_table "keyword_pools", force: :cascade do |t|
     t.string   "name"
@@ -74,6 +74,21 @@ ActiveRecord::Schema.define(version: 20170620142209) do
     t.string   "noticetitles_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+  end
+
+  create_table "user_teaches", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.string   "user_name"
+    t.string   "major"
+    t.string   "notice_title"
+    t.string   "notice_link"
+    t.string   "notice_keyword"
+    t.string   "notice_category"
+    t.string   "user_keyword_name"
+    t.integer  "user_dislike"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|

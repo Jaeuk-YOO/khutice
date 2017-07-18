@@ -26,7 +26,11 @@
   </form>
   <br>
   <br>
-    <h4>내가 입력한 키워드를 확인해보세요</h4>
+  <h4>내가 입력한 키워드를 확인해보세요</h4>
+  <br>
+  <div class="alert alert-danger" role="alert">
+    <strong>혹시 키워드에 맞지 않는 공지사항이 추천되었나요?</strong> 날로 먹는 공지사항 쿠티스는 아직 걸음마를 떼고 있는 아기입니다ㅠㅠ '좋지 않아요' 링크를 클릭하면 추천 공지사항이 삭제됩니다. 여러분이 직접 쿠티스에게 옳지 못한 추천이라고 가르칠 수 있는 기능이죠! 쿠티스에게 알려주세요! :D
+  </div>
     <div class="checkbox_chked">
       <br>
         <% if @keyword_by_current_user.nil? %>
@@ -69,6 +73,15 @@
                           <%=y.noticetitle.title%>
                         </a>
                         &nbsp;<span class="badge badge-success">공지시각 : <%= y.noticetitle.upload_date%></span>
+                        <form action="/khutice/dislike_enroll" method="POST">
+                          <input type="hidden" name="notice_title" value="<%=y.noticetitle.title%>">
+                          <input type="hidden" name="notice_category" value="<%=y.noticetitle.category%>">
+                          <input type="hidden" name="notice_link" value="<%=y.noticetitle.link%>">
+                          <input type="hidden" name="notice_keyword" value="<%=y.name%>">
+                          <input type="hidden" name="user_keyword_name" value="<%=x.name%>">
+                          <button type="submit" class="btn btn-link">좋지 않아요</button>
+                        </form>
+                        
                       </li>
                       <%end%>  
                     <%end%>
