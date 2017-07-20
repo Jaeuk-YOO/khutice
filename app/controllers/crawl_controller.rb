@@ -111,7 +111,7 @@ class CrawlController < ApplicationController
         notice_all.each do |each_notice|
             target_url = "http://www.khu.ac.kr/life/noticeView.do?noticeId="+each_notice.link+"&category=ntcate0"+each_notice.category.to_s
             parsed = Nokogiri::HTML(open(target_url))
-            parsed_db = Noticetitle.where(:link => each_notice.link).take
+            parsed_db = Noticetitle.where(:title => each_notice.title).take
             
             if parsed_db.img.nil?
                 parsed_css_img_arr = Array.new
@@ -136,7 +136,7 @@ class CrawlController < ApplicationController
             if NoticeKeyword.where(:noticetitle_id => each_notice.id).take.nil?
                 keywordpool_all = KeywordPool.all
                 keywordpool_all.each do |each_keyword_in_pool|
-                    if  (each_notice.contents.include? each_keyword_in_pool.name) || (each_notice.title.include? each_keyword_in_pool.name) == true
+                    if  ((each_notice.contents.include? each_keyword_in_pool.name)  || (each_notice.title.include? each_keyword_in_pool.name))
                         notice_keyword_input = NoticeKeyword.new
                         notice_keyword_input.noticetitle_id = each_notice.id
                         notice_keyword_input.name = each_keyword_in_pool.name

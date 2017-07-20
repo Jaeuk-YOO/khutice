@@ -17,5 +17,6 @@
 /tmp
 
 /config/secrets.yml
-/config/environments/development.rb
-/config/environments/production.rb
+/config/database.yml
+
+/config/environments/*
