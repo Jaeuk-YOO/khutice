@@ -20,4 +20,3 @@
 /config/database.yml
 
 /config/environments/*
-/public/logo.jpg
